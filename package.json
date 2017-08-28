@@ -1,0 +1,22 @@
+{
+  "name": "accident_map",
+  "version": "0.0.0",
+  "description": "Maryland Accident Map -- Vue.js Test App",
+  "main": "accident-map.js",
+  "scripts": {
+    "start": "node accident-map-server.js",
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "dependencies": {
+    "vue": "2.4.2",
+    "express": "4.15.4",
+    "lodash-node": "3.10.2",
+    "jquery": "^3.2",
+    "bootstrap": "^3.3"
+  },
+  "author": "Robert Phelps",
+  "license": "none"
+}
