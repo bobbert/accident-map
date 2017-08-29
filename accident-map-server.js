@@ -17,12 +17,8 @@ app.use('/vue',       express.static(__dirname + '/node_modules/vue/dist/'));
 var AccidentData = require('./accident-data');
 var accidentData = new AccidentData();
 
-app.get('/metadata.json', function(req, res) {
-  res.send(accidentData.metadata);
-});
-
 app.get('/data.json', function(req, res) {
-  res.send(accidentData.formattedData);
+  res.send(accidentData.simpleData);
 });
 
 // Start Express

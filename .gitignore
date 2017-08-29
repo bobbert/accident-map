@@ -1,3 +1,4 @@
 /node_modules
-data/maryland_accident_data.json
+data/*.xlsx
+data/*.csv
 package-lock.json
