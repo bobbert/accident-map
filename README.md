@@ -14,6 +14,9 @@ A simple map-based visualization of crash data for Maryland from October 2016 th
   localhost:3000 and the map should appear with lots of data points.
 
 ## Data Source:
+
   Maryland.gov Open Data Portal
+
   Maryland Statewide Vehicle Crashes: CY2016 Quarter 4
+
   https://data.maryland.gov/Public-Safety/Maryland-Statewide-Vehicle-Crashes-CY2016-Quarter-/276v-wfg2
