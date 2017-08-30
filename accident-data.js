@@ -19,7 +19,7 @@ var parse = require('csv-parse/lib/sync');
 var _     = require('lodash-node');
 
 function zeroPadDateString(dateString) {
-  var matchData = dateString.match(/^([0-9][0-9]?)\/([0-9][0-9]?)\/([0-9][0-9])$/) || []
+  var matchData = dateString.match(/^([0-9][0-9]?)\/([0-9][0-9]?)\/([0-9][0-9])$/) || [];
   if ((matchData[1].length === 2) && (matchData[2].length === 2)) {
     return dateString;
   }

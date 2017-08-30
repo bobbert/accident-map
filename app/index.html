@@ -10,18 +10,25 @@
   <script src="/lodash/lodash.js"></script>
   <script src="/bootstrap/js/bootstrap.js"></script>
   <script src="/vue/vue.js"></script>
-  <script src="/vue_gm/vue-google-maps.js"></script>
+  <script src="/vue-ui/index.js"></script>
+  <script src="/vue-gm/vue-google-maps.js"></script>
+
   <script src="app.js"></script>
+  <script src="components/filter_panel.js"></script>
 </head>
 <body>
   <div class="content">
     <div id="app-container">
       <div class="page-header">
-        <h1 class="center">Maryland Accident Map</h2>
+        <h1 class="center">Maryland Accident Map</h1>
       </div>
       <div class="pull-left fixed-left accident-panel">
-        <ul id="accident-list">
-        </ul>
+        <h2 class="center">Filtering</h2>
+        <filter-panel
+          :report-types="reportTypes"
+          :dates="dates"
+          @filter="redrawMarkers">
+        </filter-panel>
       </div>
       <div class="pull-left">
         <gmap-map
