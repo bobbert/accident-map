@@ -21,6 +21,20 @@ $(document).ready(function() {
                 .filter(function() { return true; })
                 .take(MAX_MARKERS)
                 .value();
+      },
+      dates: function() {
+        return _(this.allMarkers)
+                .map(function(marker) { return marker.date; })
+                .uniq()
+                .sort()
+                .value();
+      },
+      reportTypes: function() {
+        return _(this.allMarkers)
+                .map(function(marker) { return marker.reportType; })
+                .uniq()
+                .sort()
+                .value();
       }
     },
     methods: {
@@ -29,10 +43,18 @@ $(document).ready(function() {
 
         $.get('/data.json')
          .done(function(data) {
+           vueObj.allMarkers = [];
            console.log(data.length + ' data records received.');
            for (var i = 0, len = data.length; i < len; i++) {
              var dataRecord = data[i];
-             vueObj.allMarkers.push({position: {lat: dataRecord.lat, lng: dataRecord.lng}});
+             dataRecord.position = {lat: dataRecord.lat, lng: dataRecord.lng};
+             if (len - 1 === i) {
+               // trigger Vue update only on last record pushed to array
+               vueObj.allMarkers.push(dataRecord);
+             }
+             else {
+               vueObj.allMarkers[i] = dataRecord;
+             }
            }
          })
          .fail(function(jqXHR, textStatus) {
