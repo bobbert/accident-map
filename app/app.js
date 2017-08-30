@@ -1,32 +1,48 @@
-function initMap() {
+$(document).ready(function() {
 
-  var mapObject = null;
-  var accidentData = null;
+  const MAX_MARKERS = 1000;
 
-  // initialize map
-  var $map = $('#mapCanvas');
-  var mapOptions = {
-    center: new google.maps.LatLng(39.183917, -76.805643),
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    zoom: 8
-  };
+  Vue.use(VueGoogleMaps, {
+    load: {
+      key: 'AIzaSyD8JxzIChVrQJLgS6RRcbx175EU2K8yQgs'
+    }
+  });
 
-  mapObject = new google.maps.Map(($map || [])[0], mapOptions);
+  var appVM = new Vue({
+    el: '#app-container',
+    data: {
+      allMarkers: [],
+      filter: {}
+    },
+    computed: {
+      markers: function() {
+        // TODO: replace filter method with actual filtering logic
+        return _(this.allMarkers)
+                .filter(function() { return true; })
+                .take(MAX_MARKERS)
+                .value();
+      }
+    },
+    methods: {
+      loadAllDataPoints: function() {
+        var vueObj = this;
 
-  $.get('/data.json')
-   .done(function(data) {
-     accidentData = data;
-     console.log(accidentData.length + ' data records received.');
-     $.each(accidentData, function(index, dataRecord) {
-       new google.maps.Marker({
-          position: {lat: dataRecord.lat, lng: dataRecord.lng},
-          map: mapObject
-        });
+        $.get('/data.json')
+         .done(function(data) {
+           console.log(data.length + ' data records received.');
+           for (var i = 0, len = data.length; i < len; i++) {
+             var dataRecord = data[i];
+             vueObj.allMarkers.push({position: {lat: dataRecord.lat, lng: dataRecord.lng}});
+           }
+         })
+         .fail(function(jqXHR, textStatus) {
+           alert('Error getting data from server: ' + textStatus);
+         });
 
-     });
-   })
-   .fail(function(jqXHR, textStatus) {
-     alert('Error getting data from server: ' + textStatus);
-   });
+      }
+    }
+  });
 
-}
+  appVM.loadAllDataPoints();
+
+});

@@ -7,14 +7,15 @@
   <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" href="app.css">
   <script src="/jquery/jquery.js"></script>
+  <script src="/lodash/lodash.js"></script>
   <script src="/bootstrap/js/bootstrap.js"></script>
   <script src="/vue/vue.js"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8JxzIChVrQJLgS6RRcbx175EU2K8yQgs&callback=initMap"></script>
+  <script src="/vue_gm/vue-google-maps.js"></script>
   <script src="app.js"></script>
 </head>
 <body>
   <div class="content">
-    <div class="container">
+    <div id="app-container">
       <div class="page-header">
         <h1 class="center">Maryland Accident Map</h2>
       </div>
@@ -23,12 +24,22 @@
         </ul>
       </div>
       <div class="pull-left">
-        <div id="mapCanvas" width="800" height="800">
-
-  			</div>
+        <gmap-map
+          :center="{lat: 39.183917, lng: -76.805643}"
+          :zoom="8"
+          map-type-id="terrain"
+          style="width: 800px; height: 700px">
+          <gmap-marker
+            :key="index"
+            v-for="(m, index) in markers"
+            :position="m.position"
+            :clickable="true"
+            :draggable="true"
+            @click="center=m.position">
+          </gmap-marker>
+        </gmap-map>
       </div>
     </div>
-  </div>
 
-</body>
+  </body>
 </html>
