@@ -11,7 +11,8 @@ $(document).ready(function() {
   var FilterPanel = Vue.component('filter-panel', {
     props: [
       'report-types',
-      'dates'
+      'dates',
+      'default-date'
     ],
     template: '<div>' +
       '<label for="dateFilter">Date:</label><br />' +
@@ -26,9 +27,14 @@ $(document).ready(function() {
     '</div>',
     data: function() {
       return {
-        selectedDate: '10/01/16',
+        selectedDate: this.defaultDate,
         selectedReportType: []
       };
+    },
+    watch: {
+      defaultDate: function () {
+        this.selectedDate = this.defaultDate;
+      }
     },
     methods: {
       updateFilter: function() {
@@ -57,7 +63,7 @@ $(document).ready(function() {
     computed: {
       markers: function() {
         var filterParams = this.filter;
-        // TODO: replace filter method with actual filtering logic
+
         return _(this.allMarkers)
                 .filter(function(marker) {
                   for (var filterProp in filterParams) {
@@ -88,6 +94,25 @@ $(document).ready(function() {
                 .uniq()
                 .sort()
                 .value();
+      },
+      firstDate: function() {
+        return (this.dates || [])[0];
+      },
+      markerCount: function() {
+        return {
+          count: this.markers.length,
+          all: this.allMarkers.length
+        };
+      },
+      displayMessageBar: function() {
+        return (this.markerCount.count >= MAX_MARKERS);
+      },
+      message: function() {
+        if (this.displayMessageBar) {
+          return "Maxmimum number of viewable data points reached.  " +
+            "Displaying " + MAX_MARKERS + " of " + this.markerCount.count + " data points.";
+        }
+        return null;
       }
     },
     methods: {

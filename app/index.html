@@ -22,11 +22,15 @@
       <div class="page-header">
         <h1 class="center">Maryland Accident Map</h1>
       </div>
+      <div class="message-bar" v-if="displayMessageBar">
+        {{ message }}
+      </div>
       <div class="pull-left fixed-left accident-panel">
         <h2 class="center">Filtering</h2>
         <filter-panel
           :report-types="reportTypes"
           :dates="dates"
+          :default-date="firstDate"
           @filter="redrawMarkers">
         </filter-panel>
       </div>

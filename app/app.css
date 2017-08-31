@@ -3,6 +3,13 @@
 	text-align: center;
 }
 
+.message-bar {
+  width: 100%;
+  text-align:center;
+  background-color:red;
+  color:white;
+}
+
 .map-coordinates {
 	margin-right: 100px;
 	margin-bottom: 15px;
