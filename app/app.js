@@ -8,51 +8,12 @@ $(document).ready(function() {
     }
   });
 
-  var FilterPanel = Vue.component('filter-panel', {
-    props: [
-      'report-types',
-      'dates',
-      'default-date'
-    ],
-    template: '<div>' +
-      '<label for="dateFilter">Date:</label><br />' +
-      '<select id="dateFilter" v-model="selectedDate" @change="updateFilter()">' +
-        '<option v-for="dateOption in dates" :value="dateOption">{{ dateOption }}</option>' +
-      '</select><br />' +
-      '<span>Report Type:</span><br />' +
-      '<ul style="list-style-type: none;"><li v-for="reportTypeOption in reportTypes">' +
-        '<input type="checkbox" :id="reportTypeOption" :value="reportTypeOption" v-model="selectedReportType" @change="updateFilter()">' +
-        '<label :for="reportTypeOption">{{ reportTypeOption }}</label>' +
-      '</li></ul>' +
-    '</div>',
-    data: function() {
-      return {
-        selectedDate: this.defaultDate,
-        selectedReportType: []
-      };
-    },
-    watch: {
-      defaultDate: function () {
-        this.selectedDate = this.defaultDate;
-      }
-    },
-    methods: {
-      updateFilter: function() {
-        var filterParams = {
-          date: this.selectedDate,
-          reportType: this.selectedReportType
-        };
-        console.log('filter params:', filterParams);
-        this.$emit('filter', filterParams);
-      }
-    }
-  });
-
   var appVM = new Vue({
     el: '#app-container',
     data: {
       allMarkers: [],
-      filter: {}
+      filter: {},
+      selectedAccidentId: ""
     },
     mounted: function() {
       this.loadAllDataPoints();
@@ -113,6 +74,9 @@ $(document).ready(function() {
             "Displaying " + MAX_MARKERS + " of " + this.markerCount.count + " data points.";
         }
         return null;
+      },
+      areDetailsVisible: function(selectedId) {
+        return (this.selectedAccidentId === selectedId);
       }
     },
     methods: {
@@ -148,6 +112,9 @@ $(document).ready(function() {
         }
         this.filter = filterParams;
         console.log("redrawMarkers: filter params", filterParams);
+      },
+      toggleVisibility: function(selectedId) {
+        this.selectedAccidentId = selectedId;
       }
     }
   });

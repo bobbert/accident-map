@@ -25,8 +25,7 @@
       <div class="message-bar" v-if="displayMessageBar">
         {{ message }}
       </div>
-      <div class="pull-left fixed-left accident-panel">
-        <h2 class="center">Filtering</h2>
+      <div class="filter-bar">
         <filter-panel
           :report-types="reportTypes"
           :dates="dates"
@@ -34,7 +33,31 @@
           @filter="redrawMarkers">
         </filter-panel>
       </div>
-      <div class="pull-left">
+      <div class="pull-left fixed-left-panel accident-panel">
+
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="card" v-for="markerData in markers">
+            <div class="card-header" role="tab">
+              <h5 class="mb-0">
+                <a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" @click="toggleVisibility(markerData.id)">
+                  {{ markerData.id }}
+                </a>
+              </h5>
+            </div>
+            <div v-show="selectedAccidentId === markerData.id" role="tabpanel">
+              <div class="card-block" style="margin-left:4px; border: 1px dotted black;">
+                <label>Date:</label> <span>{{ markerData.date }}</span><br />
+                <label>Time:</label> <span>{{ markerData.time }}</span><br />
+                <label>Report Type:</label> <span>{{ markerData.reportType }}</span><br />
+                <label>Vehicle:</label> <span>{{ markerData.vehicle.year }} {{ markerData.vehicle.make }} {{ markerData.vehicle.model }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="pull-left" style="border: 1px solid black;">
+
         <gmap-map
           :center="{lat: 39.183917, lng: -76.805643}"
           :zoom="8"
@@ -49,6 +72,7 @@
             @click="center=m.position">
           </gmap-marker>
         </gmap-map>
+
       </div>
     </div>
 
