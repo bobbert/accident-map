@@ -18,15 +18,16 @@ $(document).ready(function() {
       '<select id="dateFilter" v-model="selectedDate" @change="updateFilter()">' +
         '<option v-for="dateOption in dates" :value="dateOption">{{ dateOption }}</option>' +
       '</select><br />' +
-      '<label for="reportTypeFilter">Report Type:</label><br />' +
-      '<select id="reportTypeFilter" v-model="selectedReportType" @change="updateFilter()">' +
-        '<option v-for="reportTypeOption in reportTypes" :value="reportTypeOption">{{ reportTypeOption }}</option>' +
-      '</select><br />' +
+      '<span>Report Type:</span><br />' +
+      '<ul style="list-style-type: none;"><li v-for="reportTypeOption in reportTypes">' +
+        '<input type="checkbox" :id="reportTypeOption" :value="reportTypeOption" v-model="selectedReportType" @change="updateFilter()">' +
+        '<label :for="reportTypeOption">{{ reportTypeOption }}</label>' +
+      '</li></ul>' +
     '</div>',
     data: function() {
       return {
         selectedDate: '10/01/16',
-        selectedReportType: null
+        selectedReportType: []
       };
     },
     methods: {
@@ -60,7 +61,12 @@ $(document).ready(function() {
         return _(this.allMarkers)
                 .filter(function(marker) {
                   for (var filterProp in filterParams) {
-                    if (marker[filterProp] !== filterParams[filterProp]) {
+                    // filterParams may contain either arrays or strings for comparison.
+                    // If non-array, then coerce into 1-element array and check for inclusion.
+                    if (!_.isArray(filterParams[filterProp])) {
+                      filterParams[filterProp] = [filterParams[filterProp]];
+                    }
+                    if (!_.includes(filterParams[filterProp], marker[filterProp])) {
                       return false;
                     }
                   }
