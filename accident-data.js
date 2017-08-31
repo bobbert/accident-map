@@ -1,8 +1,5 @@
 'use strict';
 
-const SIMPLE_DATA_CSV_FILES = [
-  ['crash',   'Crash_Qtr04_2016.csv']
-];
 const DATA_CSV_FILES = [
   ['crash',   'Crash_Qtr04_2016.csv'],
   ['ems',     'EMS_Qtr04_2016.csv'],
@@ -73,12 +70,9 @@ function AccidentData() {
   //  "VEHICLE_ID":"00001087-13c7-4ac7-b54f-46480b03d329","TOWED_VEHICLE_CONFIG_CODE":"0",
   //  "AREA_DAMAGED_CODE_IMP1":"1","AREA_DAMAGED_CODE1":"1","AREA_DAMAGED_CODE2":"2",
   //  "AREA_DAMAGED_CODE3":"","AREA_DAMAGED_CODE_MAIN":"1"}
-<<<<<<< HEAD
   //
   // Storing raw data in format above as objects with "REPORT_NO" field as key.
   // The "REPORT_NO" field must be present in all data set records.
-=======
->>>>>>> added Vue Google Maps library and computed property to display no more than 1000 data points
   _.each(SIMPLE_DATA_CSV_FILES, function(fileArr, key) {
     var fileData = fs.readFileSync('data/' + fileArr[1]);
     var records = parse(fileData, {columns: true});
@@ -95,24 +89,6 @@ function AccidentData() {
 
   this.rawData = rawData;
 
-  // create simple joined data recordset
-  this.simpleData = _.map(this.rawData.crash, function(dataRow) {
-    var id       = dataRow["REPORT_NO"];
-    var date     = zeroPadDateString(dataRow["ACC_DATE"]);
-    var time     = dataRow["ACC_TIME"];
-    var rptType  = dataRow["REPORT_TYPE"];
-    var roadName = dataRow["MAINROAD_NAME"]
-    var lat      = dataRow["LATITUDE"];
-    var lng      = dataRow["LONGITUDE"];
-    return {
-      id: id,
-      date: date,
-      time: time,
-      reportType: rptType,
-      lat: parseFloat(lat),
-      lng: parseFloat(lng)
-    };
-  });
   this.simpleData = _(this.rawData.crash)
     .keys()
     .map(function(reportNumber) {
@@ -120,10 +96,10 @@ function AccidentData() {
       var vehicleDataRow = rawData.vehicle[reportNumber];
 
       var id       = crashDataRow["REPORT_NO"];
-      var date     = crashDataRow["ACC_DATE"];
+      var date     = zeroPadDateString(crashDataRow["ACC_DATE"]);
       var time     = crashDataRow["ACC_TIME"];
       var rptType  = crashDataRow["REPORT_TYPE"];
-      var roadName = crashDataRow["MAINROAD_NAME"]
+      var roadName = crashDataRow["MAINROAD_NAME"];
       var lat      = crashDataRow["LATITUDE"];
       var lng      = crashDataRow["LONGITUDE"];
       var vehicle = {};
