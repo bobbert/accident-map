@@ -36,16 +36,17 @@
       <div class="pull-left fixed-left-panel accident-panel">
 
         <div id="accordion" role="tablist" aria-multiselectable="true">
-          <div class="card" v-for="markerData in markers">
+          <div class="card" v-for="markerData in markers" style="margin-left:4px;">
             <div class="card-header" role="tab">
               <h5 class="mb-0">
-                <a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" @click="toggleVisibility(markerData.id)">
+                <a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" href="#"
+                   @click="toggleVisibility(markerData.id)" :id="markerData.id">
                   {{ markerData.id }}
                 </a>
               </h5>
             </div>
             <div v-show="selectedAccidentId === markerData.id" role="tabpanel">
-              <div class="card-block" style="margin-left:4px; border: 1px dotted black;">
+              <div class="card-block" style="border: 1px dotted black;">
                 <label>Date:</label> <span>{{ markerData.date }}</span><br />
                 <label>Time:</label> <span>{{ markerData.time }}</span><br />
                 <label>Report Type:</label> <span>{{ markerData.reportType }}</span><br />
@@ -69,7 +70,7 @@
             :position="m.position"
             :clickable="true"
             :draggable="true"
-            @click="center=m.position">
+            @click="toggleVisibility(m.id)">
           </gmap-marker>
         </gmap-map>
 

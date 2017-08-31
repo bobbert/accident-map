@@ -114,7 +114,13 @@ $(document).ready(function() {
         console.log("redrawMarkers: filter params", filterParams);
       },
       toggleVisibility: function(selectedId) {
-        this.selectedAccidentId = selectedId;
+        if (this.selectedAccidentId === selectedId) {
+          this.selectedAccidentId = '';
+        }
+        else {
+          this.selectedAccidentId = selectedId;
+          $('a#' + selectedId).focus();
+        }
       }
     }
   });
