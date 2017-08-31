@@ -6,6 +6,10 @@ const DATA_CSV_FILES = [
   ['person',  'Person_Qtr04_2016.csv'],
   ['vehicle', 'Vehicle_Qtr04_2016.csv']
 ];
+const SIMPLE_DATA_CSV_FILES = [
+  ['crash',   'Crash_Qtr04_2016.csv'],
+  ['vehicle', 'Vehicle_Qtr04_2016.csv']
+];
 
 var fs    = require('fs');
 var parse = require('csv-parse/lib/sync');
@@ -53,33 +57,59 @@ function AccidentData() {
   //  "VEHICLE_ID":"00001087-13c7-4ac7-b54f-46480b03d329","TOWED_VEHICLE_CONFIG_CODE":"0",
   //  "AREA_DAMAGED_CODE_IMP1":"1","AREA_DAMAGED_CODE1":"1","AREA_DAMAGED_CODE2":"2",
   //  "AREA_DAMAGED_CODE3":"","AREA_DAMAGED_CODE_MAIN":"1"}
-  _.each(DATA_CSV_FILES, function(fileArr, key) {
+  //
+  // Storing raw data in format above as objects with "REPORT_NO" field as key.
+  // The "REPORT_NO" field must be present in all data set records.
+  _.each(SIMPLE_DATA_CSV_FILES, function(fileArr, key) {
     var fileData = fs.readFileSync('data/' + fileArr[1]);
     var records = parse(fileData, {columns: true});
-    rawData[fileArr[0]] = records;
-    console.log('Read ' + rawData[fileArr[0]].length + ' records from data set ' + fileArr[0] + '.');
+    rawData[fileArr[0]] = {};
+    _.reduce(records,
+      function(obj, record) {
+        obj[record["REPORT_NO"]] = record;
+        return obj;
+      },
+      rawData[fileArr[0]]
+    );
+    console.log('Read ' + _.keys(rawData[fileArr[0]]).length + ' records from data set ' + fileArr[0] + '.');
   });
 
   this.rawData = rawData;
 
   // create simple joined data recordset
-  this.simpleData = _.map(this.rawData.crash, function(dataRow) {
-    var id       = dataRow["REPORT_NO"];
-    var date     = dataRow["ACC_DATE"];
-    var time     = dataRow["ACC_TIME"];
-    var rptType  = dataRow["REPORT_TYPE"];
-    var roadName = dataRow["MAINROAD_NAME"]
-    var lat      = dataRow["LATITUDE"];
-    var lng      = dataRow["LONGITUDE"];
-    return {
-      id: id,
-      date: date,
-      time: time,
-      reportType: rptType,
-      lat: parseFloat(lat),
-      lng: parseFloat(lng)
-    };
-  });
+  this.simpleData = _(this.rawData.crash)
+    .keys()
+    .map(function(reportNumber) {
+      var crashDataRow   = rawData.crash[reportNumber];
+      var vehicleDataRow = rawData.vehicle[reportNumber];
+
+      var id       = crashDataRow["REPORT_NO"];
+      var date     = crashDataRow["ACC_DATE"];
+      var time     = crashDataRow["ACC_TIME"];
+      var rptType  = crashDataRow["REPORT_TYPE"];
+      var roadName = crashDataRow["MAINROAD_NAME"]
+      var lat      = crashDataRow["LATITUDE"];
+      var lng      = crashDataRow["LONGITUDE"];
+      var vehicle = {};
+      if (vehicleDataRow) {
+        vehicle = {
+          year:  vehicleDataRow["VEH_YEAR"],
+          make:  vehicleDataRow["VEH_MAKE"],
+          model: vehicleDataRow["VEH_MODEL"],
+        };
+      }
+
+      return {
+        id: id,
+        date: date,
+        time: time,
+        reportType: rptType,
+        lat: parseFloat(lat),
+        lng: parseFloat(lng),
+        vehicle: vehicle
+      };
+    })
+    .value();
 
 }
 
