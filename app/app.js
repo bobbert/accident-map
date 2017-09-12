@@ -2,6 +2,8 @@ $(document).ready(function() {
 
   const MAX_MARKERS = 1000;
 
+  import FilterPanel from '@/components/FilterPanel';
+
   Vue.use(VueGoogleMaps, {
     load: {
       key: 'AIzaSyD8JxzIChVrQJLgS6RRcbx175EU2K8yQgs'
