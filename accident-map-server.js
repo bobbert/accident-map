@@ -11,8 +11,8 @@ app.use(express.static('app'));
 
 // establish routes for static assets in node_modules
 app.use('/jquery',    express.static(__dirname + '/node_modules/jquery/dist/'));
+app.use('/lodash',    express.static(__dirname + '/node_modules/lodash/'));
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/'));
-app.use('/vue',       express.static(__dirname + '/node_modules/vue/dist/'));
 
 var AccidentData = require('./accident-data');
 var accidentData = new AccidentData();

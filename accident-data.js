@@ -15,6 +15,19 @@ var fs    = require('fs');
 var parse = require('csv-parse/lib/sync');
 var _     = require('lodash-node');
 
+function zeroPadDateString(dateString) {
+  var matchData = dateString.match(/^([0-9][0-9]?)\/([0-9][0-9]?)\/([0-9][0-9])$/) || [];
+  if ((matchData[1].length === 2) && (matchData[2].length === 2)) {
+    return dateString;
+  }
+  else if (matchData) {
+    var month = ((matchData[1].length < 2) ? "0" : "") + matchData[1];
+    var day   = ((matchData[2].length < 2) ? "0" : "") + matchData[2];
+    return month + '/' + day + '/' + matchData[3];
+  }
+  return null;
+}
+
 // Reads and parses JSON data from data.maryland.gov.
 // Fields:
 // * metadata - information about the data set (description, date updated, etc.)
@@ -76,7 +89,6 @@ function AccidentData() {
 
   this.rawData = rawData;
 
-  // create simple joined data recordset
   this.simpleData = _(this.rawData.crash)
     .keys()
     .map(function(reportNumber) {
@@ -84,10 +96,10 @@ function AccidentData() {
       var vehicleDataRow = rawData.vehicle[reportNumber];
 
       var id       = crashDataRow["REPORT_NO"];
-      var date     = crashDataRow["ACC_DATE"];
+      var date     = zeroPadDateString(crashDataRow["ACC_DATE"]);
       var time     = crashDataRow["ACC_TIME"];
       var rptType  = crashDataRow["REPORT_TYPE"];
-      var roadName = crashDataRow["MAINROAD_NAME"]
+      var roadName = crashDataRow["MAINROAD_NAME"];
       var lat      = crashDataRow["LATITUDE"];
       var lng      = crashDataRow["LONGITUDE"];
       var vehicle = {};
