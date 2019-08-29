@@ -1,6 +1,6 @@
 # Maryland Accident Map
 
-A simple map-based visualization of crash data for Maryland from October 2016 through December 2016.
+A simple map-based visualization of crash data for Maryland from October 2016 through December 2016, written in Angular.
 
 ## Installation and Usage:
 
@@ -9,9 +9,30 @@ A simple map-based visualization of crash data for Maryland from October 2016 th
 * Open Excel document, and save first four worksheets (Crash, EMS, Person, Vehicle) each to a
   separate CSV file in the same data directory: `Crash_Qtr04_2016.csv`, `EMS_Qtr04_2016.csv`,
   `Person_Qtr04_2016.csv`, and `Vehicle_Qtr04_2016.csv`.
-* Start the app by running `npm start`.  The app should correctly parse the CSV files and write
-  log statements indicating how many data records were read in.  Then point your browser to
-  localhost:3000 and the map should appear with lots of data points.
+
+### Development server
+
+  Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+### Code scaffolding
+
+  Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+### Build
+
+  Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+### Running unit tests
+
+  Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+### Running end-to-end tests
+
+  Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+### Further help
+
+  To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 ## Data Source:
 
