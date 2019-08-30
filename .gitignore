@@ -1,4 +1,6 @@
 /node_modules
+/api/node_modules
 data/*.xlsx
 data/*.csv
 package-lock.json
+/api/package-lock.json

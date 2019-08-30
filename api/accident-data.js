@@ -74,7 +74,7 @@ function AccidentData() {
   // Storing raw data in format above as objects with "REPORT_NO" field as key.
   // The "REPORT_NO" field must be present in all data set records.
   _.each(SIMPLE_DATA_CSV_FILES, function(fileArr, key) {
-    var fileData = fs.readFileSync('data/' + fileArr[1]);
+    var fileData = fs.readFileSync('../data/' + fileArr[1]);
     var records = parse(fileData, {columns: true});
     rawData[fileArr[0]] = {};
     _.reduce(records,

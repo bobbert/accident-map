@@ -1,0 +1,23 @@
+{
+  "name": "accident-map-server",
+  "version": "0.0.0",
+  "description": "Maryland Accident Map Server",
+  "main": "accident-map-server.js",
+  "scripts": {
+    "start": "nodemon accident-map-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Robert Phelps",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "csv-parse": "^1.2.1",
+    "lodash-node": "3.10.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
