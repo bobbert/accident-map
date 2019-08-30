@@ -1,7 +1,7 @@
 {
   "name": "accident-map",
   "author": "Robert Phelps",
-  "license": "none",
+  "license": "ISC",
   "description": "Maryland Accident Map -- Angular 8 Test App",
   "version": "0.0.0",
   "scripts": {

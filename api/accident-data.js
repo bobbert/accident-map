@@ -11,19 +11,19 @@ const SIMPLE_DATA_CSV_FILES = [
   ['vehicle', 'Vehicle_Qtr04_2016.csv']
 ];
 
-var fs    = require('fs');
-var parse = require('csv-parse/lib/sync');
-var _     = require('lodash-node');
+const fs    = require('fs');
+const parse = require('csv-parse/lib/sync');
+const _     = require('lodash-node');
 
 function zeroPadDateString(dateString) {
-  var matchData = dateString.match(/^([0-9][0-9]?)\/([0-9][0-9]?)\/([0-9][0-9])$/) || [];
+  let matchData = dateString.match(/^([0-9][0-9]?)\/([0-9][0-9]?)\/([0-9][0-9])$/) || [];
   if ((matchData[1].length === 2) && (matchData[2].length === 2)) {
     return dateString;
   }
   else if (matchData) {
-    var month = ((matchData[1].length < 2) ? "0" : "") + matchData[1];
-    var day   = ((matchData[2].length < 2) ? "0" : "") + matchData[2];
-    return month + '/' + day + '/' + matchData[3];
+    let month = ((matchData[1].length < 2) ? "0" : "") + matchData[1];
+    let day   = ((matchData[2].length < 2) ? "0" : "") + matchData[2];
+    return `${month}/${day}/${matchData[3]}`;
   }
   return null;
 }
@@ -73,36 +73,35 @@ function AccidentData() {
   //
   // Storing raw data in format above as objects with "REPORT_NO" field as key.
   // The "REPORT_NO" field must be present in all data set records.
-  _.each(SIMPLE_DATA_CSV_FILES, function(fileArr, key) {
-    var fileData = fs.readFileSync('data/' + fileArr[1]);
-    var records = parse(fileData, {columns: true});
+  _.each(SIMPLE_DATA_CSV_FILES, (fileArr, key) => {
+    let fileData = fs.readFileSync('data/' + fileArr[1]);
+    let records = parse(fileData, {columns: true});
     rawData[fileArr[0]] = {};
-    _.reduce(records,
-      function(obj, record) {
+    _.reduce(records, (obj, record) => {
         obj[record["REPORT_NO"]] = record;
         return obj;
       },
       rawData[fileArr[0]]
     );
-    console.log('Read ' + _.keys(rawData[fileArr[0]]).length + ' records from data set ' + fileArr[0] + '.');
+    console.log(`Read ${_.keys(rawData[fileArr[0]]).length} records from data set ${fileArr[0]}.`);
   });
 
   this.rawData = rawData;
 
   this.simpleData = _(this.rawData.crash)
     .keys()
-    .map(function(reportNumber) {
-      var crashDataRow   = rawData.crash[reportNumber];
-      var vehicleDataRow = rawData.vehicle[reportNumber];
+    .map(reportNumber => {
+      let crashDataRow   = rawData.crash[reportNumber];
+      let vehicleDataRow = rawData.vehicle[reportNumber];
 
-      var id       = crashDataRow["REPORT_NO"];
-      var date     = zeroPadDateString(crashDataRow["ACC_DATE"]);
-      var time     = crashDataRow["ACC_TIME"];
-      var rptType  = crashDataRow["REPORT_TYPE"];
-      var roadName = crashDataRow["MAINROAD_NAME"];
-      var lat      = crashDataRow["LATITUDE"];
-      var lng      = crashDataRow["LONGITUDE"];
-      var vehicle = {};
+      let id       = crashDataRow["REPORT_NO"];
+      let date     = zeroPadDateString(crashDataRow["ACC_DATE"]);
+      let time     = crashDataRow["ACC_TIME"];
+      let reportType  = crashDataRow["REPORT_TYPE"];
+      let roadName = crashDataRow["MAINROAD_NAME"];
+      let lat      = crashDataRow["LATITUDE"];
+      let lng      = crashDataRow["LONGITUDE"];
+      let vehicle = {};
       if (vehicleDataRow) {
         vehicle = {
           year:  vehicleDataRow["VEH_YEAR"],
@@ -112,13 +111,13 @@ function AccidentData() {
       }
 
       return {
-        id: id,
-        date: date,
-        time: time,
-        reportType: rptType,
+        id,
+        date,
+        time,
+        reportType,
         lat: parseFloat(lat),
         lng: parseFloat(lng),
-        vehicle: vehicle
+        vehicle
       };
     })
     .value();
