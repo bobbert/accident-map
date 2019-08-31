@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 
 import { AccidentsService } from './accidents.service';
 
@@ -8,11 +7,17 @@ import { AccidentsService } from './accidents.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'accident-map';
   accidentsByDate: any[] = [];
 
   constructor(private as: AccidentsService) { }
+
+  ngOnInit() {
+    console.log('Initializing map.');
+    // TODO: populate dropdown and initialize based on dropdown default
+    this.getAccidentsByDate('12/31/16');
+  }
 
   getAccidentsByDate(dateString) {
     this.as.getByDate(dateString).subscribe(res => {

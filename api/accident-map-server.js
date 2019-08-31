@@ -1,7 +1,8 @@
 'use strict';
 
-var express = require('express');
-const _     = require('lodash-node');
+const express = require('express'),
+      _     = require('lodash-node'),
+      cors  = require('cors');
 
 const HTTP_PORT = 3000;
 
@@ -9,6 +10,9 @@ var app = express();
 
 // serve up everything in 'app' directory as static assets
 app.use(express.static('app'));
+
+// allow cross-origin API calls
+app.use(cors());
 
 // establish routes for static assets in node_modules
 app.use('/jquery',    express.static(__dirname + '/node_modules/jquery/dist/'));
