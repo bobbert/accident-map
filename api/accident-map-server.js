@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require('express');
+const _     = require('lodash-node');
 
 const HTTP_PORT = 3000;
 
@@ -17,8 +18,29 @@ app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/'
 var AccidentData = require('./accident-data');
 var accidentData = new AccidentData();
 
-app.get('/data.json', function(req, res) {
-  res.send(accidentData.simpleData);
+app.get('/accidents.json', function(req, res) {
+  let dateSelected = req.query.date;
+
+  if (dateSelected == null) {
+    res.send({data: accidentData.simpleData});
+  }
+  else {
+    let dataByDate = accidentData.simpleData.filter(accident => {
+      return (dateSelected === accident.date);
+    });
+    res.send({data: dataByDate});
+  }
+});
+
+app.get('/dates.json', function(req, res) {
+  let dates = _(accidentData.simpleData)
+    .map(accident => accident.date)
+    .uniq()
+    .sort()
+    .reverse()
+    .value();
+
+  res.send({data: dates});
 });
 
 // Start Express

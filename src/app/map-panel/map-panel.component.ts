@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-map-panel',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./map-panel.component.sass']
 })
 export class MapPanelComponent implements OnInit {
+  @Input() accidentList: any[];
+
   lat = 39.183917;
   lng = -76.805643;
 

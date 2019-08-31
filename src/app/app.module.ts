@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { Component, NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +17,7 @@ import {APP_BASE_HREF} from '@angular/common';
     DetailsPanelComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     AgmCoreModule.forRoot({

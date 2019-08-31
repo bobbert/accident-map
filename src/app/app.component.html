@@ -3,7 +3,13 @@
     <div class="page-header">
       <h1 class="center">Maryland Accident Map</h1>
     </div>
-    <app-details-panel></app-details-panel>
-    <app-map-panel></app-map-panel>
+    <app-details-panel
+      [accidentList]="accidentsByDate"
+    >
+    </app-details-panel>
+    <app-map-panel
+      [accidentList]="accidentsByDate"
+    >
+    </app-map-panel>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-details-panel',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./details-panel.component.sass']
 })
 export class DetailsPanelComponent implements OnInit {
+  @Input() accidentList: any[];
 
   constructor() { }
 
