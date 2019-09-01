@@ -1,5 +1,27 @@
 <div class="details-panel__fixed-left">
-  <ul id="accident-list">
-
-  </ul>
+  <div id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="card" *ngFor="let accidentData of accidentList" style="margin-left:4px;">
+      <div class="card-header" role="tab">
+        <h5 class="mb-0">
+          <a
+            data-toggle="collapse"
+            data-parent="#accordion"
+            aria-expanded="true"
+            href="#"
+            (click)="toggleVisibility(accidentData.id)"
+          >
+            {{ accidentData.id }}
+          </a>
+        </h5>
+      </div>
+      <div *ngIf="selectedAccidentId === accidentData.id" role="tabpanel">
+        <div class="card-block" style="border: 1px dotted black;">
+          <label>Date:</label> <span>{{ accidentData.date }}</span><br />
+          <label>Time:</label> <span>{{ accidentData.time }}</span><br />
+          <label>Report Type:</label> <span>{{ accidentData.reportType }}</span><br />
+          <label>Vehicle:</label> <span>{{ accidentData.vehicle.year }} {{ accidentData.vehicle.make }} {{ accidentData.vehicle.model }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

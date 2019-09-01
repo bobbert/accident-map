@@ -8,9 +8,20 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DetailsPanelComponent implements OnInit {
   @Input() accidentList: any[];
 
+  selectedAccidentId: string = null;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  toggleVisibility(newSelectedId) {
+    if (this.selectedAccidentId == newSelectedId) {
+      this.selectedAccidentId = null;
+    }
+    else {
+      this.selectedAccidentId = newSelectedId;
+    }
   }
 
 }
