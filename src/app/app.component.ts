@@ -10,18 +10,32 @@ import { AccidentsService } from './accidents.service';
 export class AppComponent implements OnInit {
   title = 'accident-map';
   accidentsByDate: any[] = [];
+  accidentDates: string[] = [];
 
   constructor(private as: AccidentsService) { }
 
   ngOnInit() {
     console.log('Initializing map.');
     // TODO: populate dropdown and initialize based on dropdown default
-    this.getAccidentsByDate('12/31/16');
+    this.getDates();
+  }
+
+  getDates() {
+    return this.as.getDates().subscribe(res => {
+      this.accidentDates = (res as any).data;
+      this.getAccidentsByDate(this.accidentDates[0]);
+    });
   }
 
   getAccidentsByDate(dateString) {
-    this.as.getByDate(dateString).subscribe(res => {
+    return this.as.getByDate(dateString).subscribe(res => {
       this.accidentsByDate = (res as any).data;
     });
   }
+
+  updateFilter(event) {
+    let selectedDate = event.target.value;
+    return this.getAccidentsByDate(selectedDate);
+  }
+
 }

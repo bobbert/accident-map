@@ -36,7 +36,7 @@ app.get('/accidents.json', function(req, res) {
   }
 });
 
-app.get('/dates.json', function(req, res) {
+app.get('/accident-dates.json', function(req, res) {
   let dates = _(accidentData.simpleData)
     .map(accident => accident.date)
     .uniq()
