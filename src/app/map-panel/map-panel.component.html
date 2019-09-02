@@ -6,6 +6,7 @@
       *ngFor="let accident of accidentList"
       [latitude]="accident.lat"
       [longitude]="accident.lng"
+      [opacity]="(accidentSelectedAndNotMatching(accident.id) ? 0.1 : 1)"
     ></agm-marker>
   </agm-map>
 </div>

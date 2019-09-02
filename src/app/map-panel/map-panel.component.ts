@@ -1,4 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
 
 @Component({
   selector: 'app-map-panel',
@@ -7,6 +13,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MapPanelComponent implements OnInit {
   @Input() accidentList: any[];
+  @Input() selectedAccidentId: any[] = null;
+  @Output() selectAccident: EventEmitter<any> = new EventEmitter();
 
   lat = 39.183917;
   lng = -76.805643;
@@ -15,6 +23,10 @@ export class MapPanelComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  accidentSelectedAndNotMatching(accidentId) {
+    return ((this.selectedAccidentId != null) && (this.selectedAccidentId !== accidentId));
   }
 
 }

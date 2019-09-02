@@ -1,4 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
 
 @Component({
   selector: 'app-details-panel',
@@ -7,8 +13,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DetailsPanelComponent implements OnInit {
   @Input() accidentList: any[];
-
-  selectedAccidentId: string = null;
+  @Input() selectedAccidentId: any[];
+  @Output() selectAccident: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -16,11 +22,12 @@ export class DetailsPanelComponent implements OnInit {
   }
 
   toggleVisibility(newSelectedId) {
+    console.log('toggleVisibility: old selected = ', this.selectedAccidentId, ' new selected = ', newSelectedId);
     if (this.selectedAccidentId == newSelectedId) {
-      this.selectedAccidentId = null;
+      this.selectAccident.emit({selectedAccidentId: null});
     }
     else {
-      this.selectedAccidentId = newSelectedId;
+      this.selectAccident.emit({selectedAccidentId: newSelectedId});
     }
   }
 

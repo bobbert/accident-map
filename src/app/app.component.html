@@ -17,10 +17,14 @@
     </div>
     <app-details-panel
       [accidentList]="accidentsByDate"
+      [selectedAccidentId]="selectedAccidentId"
+      (selectAccident)="onSelectAccident($event)"
     >
     </app-details-panel>
     <app-map-panel
       [accidentList]="accidentsByDate"
+      [selectedAccidentId]="selectedAccidentId"
+      (selectAccident)="onSelectAccident($event)"
     >
     </app-map-panel>
   </div>

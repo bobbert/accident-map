@@ -11,6 +11,7 @@ export class AppComponent implements OnInit {
   title = 'accident-map';
   accidentsByDate: any[] = [];
   accidentDates: string[] = [];
+  selectedAccidentId: string = null;
 
   constructor(private as: AccidentsService) { }
 
@@ -36,6 +37,11 @@ export class AppComponent implements OnInit {
   updateFilter(event) {
     let selectedDate = event.target.value;
     return this.getAccidentsByDate(selectedDate);
+  }
+
+  onSelectAccident(event) {
+    console.log('onSelectAccident: ', event);
+    this.selectedAccidentId = event.selectedAccidentId;
   }
 
 }
