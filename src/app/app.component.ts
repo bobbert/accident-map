@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
   getAccidentsByDate(dateString) {
     return this.as.getByDate(dateString).subscribe(res => {
       this.accidentsByDate = (res as any).data;
+      this.selectedAccidentId = null;
     });
   }
 
