@@ -1,12 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
 
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { MapPanelComponent } from './map-panel/map-panel.component';
 import { DetailsPanelComponent } from './details-panel/details-panel.component';
+
+import { AccidentsService } from './accidents.service';
 
 import {APP_BASE_HREF} from '@angular/common';
 
@@ -24,7 +27,7 @@ import {APP_BASE_HREF} from '@angular/common';
       apiKey: 'AIzaSyD8JxzIChVrQJLgS6RRcbx175EU2K8yQgs'
     })
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: '/app'}],
+  providers: [{provide: APP_BASE_HREF, useValue: '/'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

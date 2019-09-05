@@ -13,7 +13,7 @@ const SIMPLE_DATA_CSV_FILES = [
 
 const fs    = require('fs');
 const parse = require('csv-parse/lib/sync');
-const _     = require('lodash-node');
+const _     = require('lodash');
 
 function zeroPadDateString(dateString) {
   let matchData = dateString.match(/^([0-9][0-9]?)\/([0-9][0-9]?)\/([0-9][0-9])$/) || [];
