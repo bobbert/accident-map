@@ -1,0 +1,21 @@
+.details-panel__fixed-left {
+	float: left;
+	height: 600px;
+	width: 235px;
+	background-color: #38393d;
+	overflow-y: scroll;
+}
+
+.details-panel__fixed-left a {
+    color: white;
+    text-decoration: none;
+}
+
+.details-panel__fixed-left span {
+    color: #ddd;
+}
+
+.details-panel__fixed-left label {
+    color: #ff9;
+    margin-right: 0.25rem;
+}

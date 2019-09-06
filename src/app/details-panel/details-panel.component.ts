@@ -9,7 +9,7 @@ import {
 @Component({
   selector: 'app-details-panel',
   templateUrl: './details-panel.component.html',
-  styleUrls: ['./details-panel.component.sass']
+  styleUrls: ['./details-panel.component.css']
 })
 export class DetailsPanelComponent implements OnInit {
   @Input() accidentList: any[];

@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express'),
-      _     = require('lodash-node'),
+      _     = require('lodash'),
       cors  = require('cors');
 
 const HTTP_PORT = 3000;

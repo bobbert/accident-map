@@ -9,7 +9,7 @@ import {
 @Component({
   selector: 'app-map-panel',
   templateUrl: './map-panel.component.html',
-  styleUrls: ['./map-panel.component.sass']
+  styleUrls: ['./map-panel.component.css']
 })
 export class MapPanelComponent implements OnInit {
   @Input() accidentList: any[];
@@ -28,5 +28,4 @@ export class MapPanelComponent implements OnInit {
   accidentSelectedAndNotMatching(accidentId) {
     return ((this.selectedAccidentId != null) && (this.selectedAccidentId !== accidentId));
   }
-
 }
