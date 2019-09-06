@@ -101,14 +101,9 @@ function AccidentData() {
       let roadName = crashDataRow["MAINROAD_NAME"];
       let lat      = crashDataRow["LATITUDE"];
       let lng      = crashDataRow["LONGITUDE"];
-      let vehicle = {};
-      if (vehicleDataRow) {
-        vehicle = {
-          year:  vehicleDataRow["VEH_YEAR"],
-          make:  vehicleDataRow["VEH_MAKE"],
-          model: vehicleDataRow["VEH_MODEL"],
-        };
-      }
+      let year     = (vehicleDataRow == null) ? "" : vehicleDataRow["VEH_YEAR"];
+      let make     = (vehicleDataRow == null) ? "" : vehicleDataRow["VEH_MAKE"];
+      let model    = (vehicleDataRow == null) ? "" : vehicleDataRow["VEH_MODEL"];
 
       return {
         id,
@@ -117,7 +112,9 @@ function AccidentData() {
         reportType,
         lat: parseFloat(lat),
         lng: parseFloat(lng),
-        vehicle
+        year,
+        make,
+        model
       };
     })
     .value();

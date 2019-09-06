@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AccidentsService } from './accidents.service';
+import { Accident } from './accident';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { AccidentsService } from './accidents.service';
 })
 export class AppComponent implements OnInit {
   title = 'accident-map';
-  accidentsByDate: any[] = [];
+  accidentsByDate: Accident[] = [];
   accidentDates: string[] = [];
   selectedAccidentId: string = null;
 
@@ -23,14 +24,16 @@ export class AppComponent implements OnInit {
 
   getDates() {
     return this.accidentsService.getDates().subscribe(res => {
-      this.accidentDates = (res as any).data;
+      console.log('Accident Dates: ', res);
+      this.accidentDates = res;
       this.getAccidentsByDate(this.accidentDates[0]);
     });
   }
 
-  getAccidentsByDate(dateString: any) {
-    return this.accidentsService.getByDate(dateString).subscribe(res => {
-      this.accidentsByDate = (res as any).data;
+  getAccidentsByDate(dateString: string) {
+    return this.accidentsService.getByDate(dateString).subscribe((res: Accident[]) => {
+      console.log('Accidents: ', res);
+      this.accidentsByDate = res;
       this.selectedAccidentId = null;
     });
   }

@@ -6,14 +6,16 @@ import {
   EventEmitter
 } from '@angular/core';
 
+import { Accident } from '../accident';
+
 @Component({
   selector: 'app-map-panel',
   templateUrl: './map-panel.component.html',
   styleUrls: ['./map-panel.component.css']
 })
 export class MapPanelComponent implements OnInit {
-  @Input() accidentList: any[];
-  @Input() selectedAccidentId: any[] = null;
+  @Input() accidentList: Accident[];
+  @Input() selectedAccidentId: string = null;
   @Output() selectAccident: EventEmitter<any> = new EventEmitter();
 
   lat = 39.183917;

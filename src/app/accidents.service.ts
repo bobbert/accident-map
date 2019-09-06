@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+import { Accident } from './accident';
 
 @Injectable({
   providedIn: 'root'
@@ -12,16 +15,16 @@ export class AccidentsService {
 
   constructor(private http: HttpClient) { }
 
-  getAll() {
-    return this.http.get(this.accidentsEndpoint);
+  getAll(): Observable<Accident[]> {
+    return this.http.get<Accident[]>(this.accidentsEndpoint);
   }
 
-  getDates() {
-    return this.http.get(this.accidentDatesEndpoint);
+  getDates(): Observable<string[]> {
+    return this.http.get<string[]>(this.accidentDatesEndpoint);
   }
 
-  getByDate(dateString: any) {
+  getByDate(dateString: string): Observable<Accident[]> {
     let params = new HttpParams().set("date", dateString);
-    return this.http.get(this.accidentsEndpoint, { params });
+    return this.http.get<Accident[]>(this.accidentsEndpoint, { params });
   }
 }

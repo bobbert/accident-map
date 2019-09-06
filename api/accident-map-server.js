@@ -32,7 +32,7 @@ app.get('/accidents.json', function(req, res) {
     let dataByDate = accidentData.simpleData.filter(accident => {
       return (dateSelected === accident.date);
     });
-    res.send({data: dataByDate});
+    res.send(dataByDate);
   }
 });
 
@@ -44,7 +44,7 @@ app.get('/accident-dates.json', function(req, res) {
     .reverse()
     .value();
 
-  res.send({data: dates});
+  res.send(dates);
 });
 
 // Start Express

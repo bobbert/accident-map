@@ -6,14 +6,16 @@ import {
   EventEmitter
 } from '@angular/core';
 
+import { Accident } from '../accident';
+
 @Component({
   selector: 'app-details-panel',
   templateUrl: './details-panel.component.html',
   styleUrls: ['./details-panel.component.css']
 })
 export class DetailsPanelComponent implements OnInit {
-  @Input() accidentList: any[];
-  @Input() selectedAccidentId: any[];
+  @Input() accidentList: Accident[];
+  @Input() selectedAccidentId: string = null;
   @Output() selectAccident: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
@@ -21,7 +23,7 @@ export class DetailsPanelComponent implements OnInit {
   ngOnInit() {
   }
 
-  toggleVisibility(newSelectedId) {
+  toggleVisibility(newSelectedId: string) {
     console.log('toggleVisibility: old selected = ', this.selectedAccidentId, ' new selected = ', newSelectedId);
     if (this.selectedAccidentId == newSelectedId) {
       this.selectAccident.emit({selectedAccidentId: null});
