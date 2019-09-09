@@ -28,17 +28,19 @@ export class AppComponent implements OnInit {
   }
 
   getAccidentsByDate(dateString: string) {
-    return this.accidentsService.getFilteredAccidents({date: dateString}).subscribe((res: Accident[]) => {
-      if (res.length > 1000) {
-        // TODO: use something better than an alert box
-        alert('Resultset is too large; only showing first 1000 accidents.');
-        this.accidentsByDate = res.slice(0, 1000);
-      }
-      else {
-        this.accidentsByDate = res;
-      }
-      // reset selected accident after map markers reload
-      this.selectedAccident = null;
+    return this.accidentsService
+      .getFilteredAccidents({date: dateString})
+      .subscribe((res: Accident[]) => {
+        if (res.length > 1000) {
+          // TODO: use something better than an alert box
+          alert('Resultset is too large; only showing first 1000 accidents.');
+          this.accidentsByDate = res.slice(0, 1000);
+        }
+        else {
+          this.accidentsByDate = res;
+        }
+        // reset selected accident after map markers reload
+        this.selectedAccident = null;
     });
   }
 
