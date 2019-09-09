@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   title = 'accident-map';
   accidentsByDate: Accident[] = [];
   accidentDates: string[] = [];
-  selectedAccidentId: string = null;
+  selectedAccident: Accident = null;
 
   constructor(private accidentsService: AccidentsService) { }
 
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   }
 
   getDates() {
-    return this.accidentsService.getDates().subscribe(res => {
+    return this.accidentsService.getDates().subscribe((res: string[]) => {
       console.log('Accident Dates: ', res);
       this.accidentDates = res;
       this.getAccidentsByDate(this.accidentDates[0]);
@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
     return this.accidentsService.getByDate(dateString).subscribe((res: Accident[]) => {
       console.log('Accidents: ', res);
       this.accidentsByDate = res;
-      this.selectedAccidentId = null;
+      this.selectedAccident = null;
     });
   }
 
@@ -43,8 +43,7 @@ export class AppComponent implements OnInit {
     return this.getAccidentsByDate(selectedDate);
   }
 
-  onSelectAccident(event: any) {
-    console.log('onSelectAccident: ', event);
-    this.selectedAccidentId = event.selectedAccidentId;
+  onSelectAccident(selectedAccident: Accident) {
+    this.selectedAccident = selectedAccident;
   }
 }

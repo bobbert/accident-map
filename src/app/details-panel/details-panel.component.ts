@@ -15,21 +15,26 @@ import { Accident } from '../accident';
 })
 export class DetailsPanelComponent implements OnInit {
   @Input() accidentList: Accident[];
-  @Input() selectedAccidentId: string = null;
-  @Output() selectAccident: EventEmitter<any> = new EventEmitter();
+  @Input() selectedAccident: Accident = null;
+  @Output() selectAccident: EventEmitter<Accident> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  toggleVisibility(newSelectedId: string) {
-    console.log('toggleVisibility: old selected = ', this.selectedAccidentId, ' new selected = ', newSelectedId);
-    if (this.selectedAccidentId == newSelectedId) {
-      this.selectAccident.emit({selectedAccidentId: null});
+  toggleVisibility(newSelectedAccident: Accident) {
+    if (newSelectedAccident == null) {
+      this.selectAccident.emit(null);
+    }
+    else  if (this.selectedAccident == null) {
+      this.selectAccident.emit(newSelectedAccident);
+    }
+    else if (this.selectedAccident.id === newSelectedAccident.id) {
+      this.selectAccident.emit(null);
     }
     else {
-      this.selectAccident.emit({selectedAccidentId: newSelectedId});
+      this.selectAccident.emit(newSelectedAccident);
     }
   }
 

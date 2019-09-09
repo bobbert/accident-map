@@ -7,6 +7,7 @@
       [latitude]="accident.lat"
       [longitude]="accident.lng"
       [opacity]="(accidentSelectedAndNotMatching(accident.id) ? 0.1 : 1)"
+      (markerClick)="onClickAccident(accident)"
     ></agm-marker>
   </agm-map>
 </div>

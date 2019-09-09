@@ -15,8 +15,8 @@ import { Accident } from '../accident';
 })
 export class MapPanelComponent implements OnInit {
   @Input() accidentList: Accident[];
-  @Input() selectedAccidentId: string = null;
-  @Output() selectAccident: EventEmitter<any> = new EventEmitter();
+  @Input() selectedAccident: Accident = null;
+  @Output() selectAccident: EventEmitter<Accident> = new EventEmitter();
 
   lat = 39.183917;
   lng = -76.805643;
@@ -28,6 +28,22 @@ export class MapPanelComponent implements OnInit {
   }
 
   accidentSelectedAndNotMatching(accidentId) {
-    return ((this.selectedAccidentId != null) && (this.selectedAccidentId !== accidentId));
+    return ((this.selectedAccident != null) && (this.selectedAccident.id !== accidentId));
   }
+
+  onClickAccident(newSelectedAccident: Accident) {
+    if (newSelectedAccident == null) {
+      this.selectAccident.emit(null);
+    }
+    else  if (this.selectedAccident == null) {
+      this.selectAccident.emit(newSelectedAccident);
+    }
+    else if (this.selectedAccident.id === newSelectedAccident.id) {
+      this.selectAccident.emit(null);
+    }
+    else {
+      this.selectAccident.emit(newSelectedAccident);
+    }
+  }
+
 }
