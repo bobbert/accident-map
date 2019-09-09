@@ -17,23 +17,27 @@ export class AppComponent implements OnInit {
   constructor(private accidentsService: AccidentsService) { }
 
   ngOnInit() {
-    console.log('Initializing map.');
-    // TODO: populate dropdown and initialize based on dropdown default
     this.getDates();
   }
 
   getDates() {
     return this.accidentsService.getDates().subscribe((res: string[]) => {
-      console.log('Accident Dates: ', res);
       this.accidentDates = res;
       this.getAccidentsByDate(this.accidentDates[0]);
     });
   }
 
   getAccidentsByDate(dateString: string) {
-    return this.accidentsService.getByDate(dateString).subscribe((res: Accident[]) => {
-      console.log('Accidents: ', res);
-      this.accidentsByDate = res;
+    return this.accidentsService.getFilteredAccidents({date: dateString}).subscribe((res: Accident[]) => {
+      if (res.length > 1000) {
+        // TODO: use something better than an alert box
+        alert('Resultset is too large; only showing first 1000 accidents.');
+        this.accidentsByDate = res.slice(0, 1000);
+      }
+      else {
+        this.accidentsByDate = res;
+      }
+      // reset selected accident after map markers reload
       this.selectedAccident = null;
     });
   }

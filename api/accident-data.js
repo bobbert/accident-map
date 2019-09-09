@@ -99,6 +99,7 @@ function AccidentData() {
       let time     = crashDataRow["ACC_TIME"];
       let reportType  = crashDataRow["REPORT_TYPE"];
       let roadName = crashDataRow["MAINROAD_NAME"];
+      let agencyName = crashDataRow["AGENCY_CODE"];
       let lat      = crashDataRow["LATITUDE"];
       let lng      = crashDataRow["LONGITUDE"];
       let year     = (vehicleDataRow == null) ? "" : vehicleDataRow["VEH_YEAR"];
@@ -110,6 +111,8 @@ function AccidentData() {
         date,
         time,
         reportType,
+        roadName,
+        agencyName,
         lat: parseFloat(lat),
         lng: parseFloat(lng),
         year,

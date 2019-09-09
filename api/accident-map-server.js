@@ -19,24 +19,38 @@ app.use('/jquery',    express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/lodash',    express.static(__dirname + '/node_modules/lodash/'));
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/'));
 
-var AccidentData = require('./accident-data');
-var accidentData = new AccidentData();
+const AccidentData = require('./accident-data');
+const accidentData = new AccidentData();
+
+const filterableFields = [
+  'date',
+  'reportType',
+  'year',
+  'make',
+  'agencyName'
+];
 
 app.get('/accidents.json', function(req, res) {
-  let dateSelected = req.query.date;
+  let {
+    date,
+    reportType,
+    year,
+    make,
+    agencyName
+  } = req.query;
 
-  if (dateSelected == null) {
-    res.send({data: accidentData.simpleData});
-  }
-  else {
-    let dataByDate = accidentData.simpleData.filter(accident => {
-      return (dateSelected === accident.date);
-    });
-    res.send(dataByDate);
-  }
+  const filterOptions = Object.assign({}, 
+    (date == null) ? {} : {date},
+    (reportType == null) ? {} : {reportType},
+    (year == null) ? {} : {year},
+    (make == null) ? {} : {make},
+    (agencyName == null) ? {} : {agencyName}
+  );
+
+  res.send(filterAccidentsBy(filterOptions));
 });
 
-app.get('/accident-dates.json', function(req, res) {
+app.get('/accident-date-list.json', function(req, res) {
   let dates = _(accidentData.simpleData)
     .map(accident => accident.date)
     .uniq()
@@ -46,6 +60,64 @@ app.get('/accident-dates.json', function(req, res) {
 
   res.send(dates);
 });
+
+app.get('/accident-type-list.json', function(req, res) {
+  let accidentTypes = _(accidentData.simpleData)
+    .map(accident => accident.reportType)
+    .uniq()
+    .sort()
+    .value();
+
+  res.send(accidentTypes);
+});
+
+app.get('/agency-name-list.json', function(req, res) {
+  let agencyNames = _(accidentData.simpleData)
+    .map(accident => accident.agencyName)
+    .uniq()
+    .sort()
+    .value();
+
+  res.send(agencyNames);
+});
+
+app.get('/car-make-list.json', function(req, res) {
+  let agencyNames = _(accidentData.simpleData)
+    .map(accident => accident.make)
+    .uniq()
+    .sort()
+    .value();
+
+  res.send(agencyNames);
+});
+
+function filterAccidentsBy(filterObj = {}) {
+  let selectedData = accidentData.simpleData;
+  // filter on each attribute if
+  const filterFields = getFilterFields(filterObj);
+  filterFields.forEach(filterField => {
+    const filterValue = filterObj[filterField];
+    selectedData = selectedData.filter(accident => accident[filterField] === filterValue);
+  })
+  return selectedData;
+}
+
+function getFilterFields(filterObj = {}) {
+  const filterObjKeys = Object.keys(filterObj);
+  return filterableFields.filter(filterableField => {
+    return (filterObjKeys.includes(filterableField));
+  })
+}
+
+function selectBy(fieldName) {
+  return _(accidentData.simpleData)
+  .map(accident => accident[fieldName])
+  .uniq()
+  .sort()
+  .reverse()
+  .value();
+}
+
 
 // Start Express
 app.listen(HTTP_PORT, function () {
