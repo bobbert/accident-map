@@ -1,11 +1,26 @@
-<div class="results-panel__fixed-left">
-  <div 
-    class="card results-panel__accident-card"
-    *ngFor="let accidentData of accidentList" 
-    (click)="toggleVisibility(accidentData.id)"
-  >
-    <strong>{{ accidentData.id }}</strong><br />
-    <span>{{ accidentData.datetime }}</span><br />
-    <label>Vehicle:</label> <span>{{ accidentData.vehicleName }}</span>
+<div class="card">
+  <div class="card-header">
+    Results
+  </div>
+  <div class="card-body">
+
+      <div class="accordion" id="resultsAccordion">
+        <div
+          class="card results-panel__accident-card"
+          *ngFor="let accidentData of accidentList" 
+          (click)="toggleVisibility(accidentData)"
+        >
+          <div class="card-header">
+              {{ accidentData.id }}
+          </div>
+          <div *ngIf="isSelected(accidentData.id)">
+            <div class="card-body">
+                <span>{{ accidentData.datetime }}</span><br />
+                <label>Vehicle:</label> <span>{{ accidentData.vehicleName }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
   </div>
 </div>

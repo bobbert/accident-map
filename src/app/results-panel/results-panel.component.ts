@@ -23,7 +23,12 @@ export class ResultsPanelComponent implements OnInit {
   ngOnInit() {
   }
 
+  isSelected(accidentId: string) {
+    return ((this.selectedAccident != null) && (accidentId === this.selectedAccident.id));
+  }
+
   toggleVisibility(newSelectedAccident: Accident) {
+    console.log('newSelectedAccident = ', newSelectedAccident);
     if (newSelectedAccident == null) {
       this.selectAccident.emit(null);
     }

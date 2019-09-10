@@ -16,8 +16,6 @@ app.use(cors());
 
 // establish routes for static assets in node_modules
 app.use('/jquery',    express.static(__dirname + '/node_modules/jquery/dist/'));
-app.use('/lodash',    express.static(__dirname + '/node_modules/lodash/'));
-app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/'));
 
 const AccidentData = require('./accident-data');
 const accidentData = new AccidentData();

@@ -1,23 +1,28 @@
 <div class="content">
   <div class="container">
     <div class="page-header">
-      <h1 class="center">Maryland Accident Map</h1>
-    </div>
-    <app-filter-panel
-      (updateFilter)="onUpdateFilter($event)"
-    >
-    </app-filter-panel>
-    <app-results-panel
-      [accidentList]="accidentsByDate"
-      [selectedAccident]="selectedAccident"
-      (selectAccident)="onSelectAccident($event)"
-    >
-    </app-results-panel>
-    <app-map-panel
-      [accidentList]="accidentsByDate"
-      [selectedAccident]="selectedAccident"
-      (selectAccident)="onSelectAccident($event)"
-    >
-    </app-map-panel>
+      <h1>Maryland Accident Map</h1>
+      <div class="row">
+        <div class="col-sm">
+          <app-filter-panel
+            (updateFilter)="onUpdateFilter($event)"
+          >
+          </app-filter-panel>
+          <app-results-panel
+            [accidentList]="accidentsByDate"
+            [selectedAccident]="selectedAccident"
+            (selectAccident)="onSelectAccident($event)"
+          >
+          </app-results-panel>
+        </div>
+        <div class="col-sm">
+          <app-map-panel
+            [accidentList]="accidentsByDate"
+            [selectedAccident]="selectedAccident"
+            (selectAccident)="onSelectAccident($event)"
+          >
+          </app-map-panel>      
+        </div>
+      </div>
   </div>
 </div>
