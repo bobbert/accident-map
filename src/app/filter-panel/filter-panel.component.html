@@ -1,0 +1,73 @@
+<div class="card">
+<div class="card-header">
+  Filter by selections:
+</div>
+<div class="card-body">
+    <div class="form-group">
+        <label for="dateFilter">Date: </label>
+        <select 
+          id="dateFilter" 
+          placeholder="Select a date"
+          (change)="onUpdateFilter('date', $event)"
+        >
+          <option
+            *ngFor="let accidentDate of accidentDates"
+            [value]="accidentDate"
+            [selected]="accidentDate == selectedFilter.date"
+          >
+            {{ accidentDate }}
+          </option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="accidentTypeFilter">Accident Type: </label>
+        <select 
+          id="accidentTypeFilter" 
+          (change)="onUpdateFilter('accidentType', $event)"
+        >
+          <option value="" selected>All Accident Types</option>
+          <option
+            *ngFor="let accidentType of accidentTypes"
+            [value]="accidentType"
+            [selected]="accidentType == selectedFilter.accidentType"
+          >
+            {{ accidentType }}
+          </option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="agencyNameFilter">Agency Name: </label>
+        <select 
+          id="agencyNameFilter" 
+          placeholder="Select an agency name"
+          (change)="onUpdateFilter('agencyName', $event)"
+        >
+          <option value="" selected>All Agencies</option>
+          <option
+              *ngFor="let agencyName of agencyNames"
+              [value]="agencyName"
+              [selected]="agencyName == selectedFilter.agencyName"
+          >
+            {{ agencyName }}
+          </option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="carMakeFilter">Car Make: </label>
+        <select 
+          id="carMakeFilter" 
+          placeholder="Select a car type"
+          (change)="onUpdateFilter('carMake', $event)"
+        >
+        <option value="" selected>All Car Types</option>
+          <option
+              *ngFor="let carMake of carMakes"
+              [value]="carMake"
+              [selected]="carMake == selectedFilter.carMake"
+          >
+            {{ carMake }}
+          </option>
+        </select>
+    </div>
+  </div>
+</div>

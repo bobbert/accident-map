@@ -103,8 +103,8 @@ function AccidentData() {
       let lat      = crashDataRow["LATITUDE"];
       let lng      = crashDataRow["LONGITUDE"];
       let year     = (vehicleDataRow == null) ? "" : vehicleDataRow["VEH_YEAR"];
-      let make     = (vehicleDataRow == null) ? "" : vehicleDataRow["VEH_MAKE"];
-      let model    = (vehicleDataRow == null) ? "" : vehicleDataRow["VEH_MODEL"];
+      let make     = (vehicleDataRow == null) ? "" : vehicleDataRow["VEH_MAKE"].trim();
+      let model    = (vehicleDataRow == null) ? "" : vehicleDataRow["VEH_MODEL"].trim();
 
       return {
         id,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AccidentsService } from './accidents.service';
 import { Accident } from './accident';
+import { FilterOptions } from './filter-options';
 
 @Component({
   selector: 'app-root',
@@ -11,25 +12,15 @@ import { Accident } from './accident';
 export class AppComponent implements OnInit {
   title = 'accident-map';
   accidentsByDate: Accident[] = [];
-  accidentDates: string[] = [];
   selectedAccident: Accident = null;
 
   constructor(private accidentsService: AccidentsService) { }
 
-  ngOnInit() {
-    this.getDates();
-  }
+  ngOnInit() {}
 
-  getDates() {
-    return this.accidentsService.getDates().subscribe((res: string[]) => {
-      this.accidentDates = res;
-      this.getAccidentsByDate(this.accidentDates[0]);
-    });
-  }
-
-  getAccidentsByDate(dateString: string) {
+  getAccidentsByFilter(selectedFilter: FilterOptions) {
     return this.accidentsService
-      .getFilteredAccidents({date: dateString})
+      .getFilteredAccidents(selectedFilter)
       .subscribe((res: Accident[]) => {
         if (res.length > 1000) {
           // TODO: use something better than an alert box
@@ -44,12 +35,11 @@ export class AppComponent implements OnInit {
     });
   }
 
-  updateFilter(event: any) {
-    let selectedDate = event.target.value;
-    return this.getAccidentsByDate(selectedDate);
-  }
-
   onSelectAccident(selectedAccident: Accident) {
     this.selectedAccident = selectedAccident;
   }
+
+  onUpdateFilter(selectedFilter: FilterOptions) {
+    return this.getAccidentsByFilter(selectedFilter);
+  }  
 }

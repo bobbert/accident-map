@@ -9,11 +9,11 @@ import {
 import { Accident } from '../accident';
 
 @Component({
-  selector: 'app-details-panel',
-  templateUrl: './details-panel.component.html',
-  styleUrls: ['./details-panel.component.css']
+  selector: 'app-results-panel',
+  templateUrl: './results-panel.component.html',
+  styleUrls: ['./results-panel.component.css']
 })
-export class DetailsPanelComponent implements OnInit {
+export class ResultsPanelComponent implements OnInit {
   @Input() accidentList: Accident[];
   @Input() selectedAccident: Accident = null;
   @Output() selectAccident: EventEmitter<Accident> = new EventEmitter();

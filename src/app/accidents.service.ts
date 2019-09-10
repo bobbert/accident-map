@@ -3,6 +3,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Accident } from './accident';
+import { FilterOptions } from './filter-options';
+
+// TODO: move to util class?
+function isEmpty(value: any) {
+  return ((value == null) || (value.length === 0));
+}
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +25,20 @@ export class AccidentsService {
   
   constructor(private http: HttpClient) { }
 
-  getFilteredAccidents(filterOptions: Object = {}): Observable<Accident[]> {
+  getFilteredAccidents(filterOptions: FilterOptions): Observable<Accident[]> {
     let params = new HttpParams();
-    for (let [key, value] of Object.entries(filterOptions)) {
-      params = params.set(key, value);
+
+    if (!isEmpty(filterOptions.date)) {
+      params = params.set("date", filterOptions.date);
+    }
+    if (!isEmpty(filterOptions.agencyName)) {
+      params = params.set("agencyName", filterOptions.agencyName);
+    }
+    if (!isEmpty(filterOptions.reportType)) {
+      params = params.set("reportType", filterOptions.reportType);
+    }
+    if (!isEmpty(filterOptions.make)) {
+      params = params.set("make", filterOptions.make);
     }
 
     return this.http.get<Accident[]>(this.accidentsEndpoint, { params });

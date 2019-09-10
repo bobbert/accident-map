@@ -2,25 +2,17 @@
   <div class="container">
     <div class="page-header">
       <h1 class="center">Maryland Accident Map</h1>
-      <h2 class="center">
-        Select a date:
-        <select id="dateFilter" (change)="updateFilter($event)">
-          <option
-            *ngFor="let accidentDate of accidentDates"
-            [value]="accidentDate"
-            [selected]="accidentDate == selectedDate"
-          >
-            {{ accidentDate }}
-          </option>
-        </select>
-      </h2>
     </div>
-    <app-details-panel
+    <app-filter-panel
+      (updateFilter)="onUpdateFilter($event)"
+    >
+    </app-filter-panel>
+    <app-results-panel
       [accidentList]="accidentsByDate"
       [selectedAccident]="selectedAccident"
       (selectAccident)="onSelectAccident($event)"
     >
-    </app-details-panel>
+    </app-results-panel>
     <app-map-panel
       [accidentList]="accidentsByDate"
       [selectedAccident]="selectedAccident"
